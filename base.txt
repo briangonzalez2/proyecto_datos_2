@@ -1,0 +1,48 @@
+CREATE SCHEMA IF NOT EXISTS bodega_avocado;
+
+CREATE TABLE bodega_avocado.dim_fecha (
+    fecha_key INT PRIMARY KEY,
+    anio INT,
+    mes INT,
+    dia INT,
+    semana INT
+);
+
+CREATE TABLE bodega_avocado.dim_zona (
+    zona_key SERIAL PRIMARY KEY,
+    zona_nombre VARCHAR(50)
+);
+
+CREATE TABLE bodega_avocado.dim_estado (
+    estado_key SERIAL PRIMARY KEY,
+    estado_nombre VARCHAR(50),
+    zona_key INT REFERENCES bodega_avocado.dim_zona(zona_key)
+);
+
+CREATE TABLE bodega_avocado.dim_region (
+    region_key SERIAL PRIMARY KEY,
+    region_nombre VARCHAR(50),
+    estado_key INT REFERENCES bodega_avocado.dim_estado(estado_key)
+);
+
+CREATE TABLE bodega_avocado.dim_producto (
+    producto_key SERIAL PRIMARY KEY,
+    tipo VARCHAR(20),
+    anio INT
+);
+
+CREATE TABLE bodega_avocado.fact_ventas_aguacate (
+    fact_key SERIAL PRIMARY KEY,
+    fecha_key INT REFERENCES bodega_avocado.dim_fecha(fecha_key),
+    producto_key INT REFERENCES bodega_avocado.dim_producto(producto_key),
+    region_key INT REFERENCES bodega_avocado.dim_region(region_key),
+    average_price NUMERIC,
+    total_volume NUMERIC,
+    small_hass_4046 NUMERIC,
+    large_hass_4225 NUMERIC,
+    xlarge_hass_4770 NUMERIC,
+    total_bags NUMERIC,
+    small_bags NUMERIC,
+    large_bags NUMERIC,
+    xlarge_bags NUMERIC
+);
