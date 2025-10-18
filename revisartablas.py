@@ -15,7 +15,7 @@ tablas = [
     "bodega_avocado.fact_ventas_aguacate"
 ]
 
-print("🔍 Verificando tablas del modelo en copo de nieve:\n")
+print("Verificando tablas del modelo en copo de nieve:\n")
 
 for tabla in tablas:
     try:
